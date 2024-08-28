@@ -12,13 +12,15 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/data" />
+            <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/ui" />
             <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/detail" />
+            <option value="$PROJECT_DIR$/features/detail/ui" />
             <option value="$PROJECT_DIR$/features/home" />
             <option value="$PROJECT_DIR$/features/home/data" />
             <option value="$PROJECT_DIR$/features/home/domain" />
             <option value="$PROJECT_DIR$/features/home/ui" />
-            <option value="$PROJECT_DIR$/features/movie" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

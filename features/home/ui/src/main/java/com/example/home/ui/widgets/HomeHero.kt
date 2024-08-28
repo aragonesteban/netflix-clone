@@ -5,19 +5,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.domain.model.Media
-import com.example.ui.molecules.RemoteImage
+import com.example.ui.molecules.NetflixButton
+import com.example.ui.molecules.NetflixRemoteImage
 import com.example.ui.theme.NetflixTheme
 
 @Composable
@@ -47,7 +44,7 @@ fun HomeHero(
             .fillMaxWidth()
             .height(530.dp)
     ) {
-        RemoteImage(
+        NetflixRemoteImage(
             url = movie.poster,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxWidth()
@@ -79,7 +76,7 @@ fun HomeHero(
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.displayMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = NetflixTheme.colors.onPrimary,
                 modifier = Modifier.padding(horizontal = 22.dp)
             )
 
@@ -106,27 +103,17 @@ fun HomeHeroActions(
             Icon(
                 imageVector = Icons.Outlined.FavoriteBorder,
                 contentDescription = "",
-                tint = MaterialTheme.colorScheme.onPrimary
+                tint = NetflixTheme.colors.onPrimary
             )
         }
 
-        Button(
-            onClick = {},
-            shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.onPrimary
-            ),
-            modifier = Modifier.padding(end = 8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = "Play",
-                modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colorScheme.onSecondary
-            )
-            Spacer(modifier = Modifier.size(4.dp))
-            Text("Play", color = MaterialTheme.colorScheme.onSecondary)
-        }
+        NetflixButton(
+            text = "Play",
+            onClick = { /*TODO*/ },
+            icon = Icons.Default.PlayArrow,
+            containerColor = NetflixTheme.colors.onPrimary,
+            contentColor = NetflixTheme.colors.onSecondary
+        )
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -135,9 +122,9 @@ fun HomeHeroActions(
                 imageVector = Icons.Outlined.Info,
                 contentDescription = "Info",
                 modifier = Modifier.size(16.dp),
-                tint = MaterialTheme.colorScheme.onPrimary
+                tint = NetflixTheme.colors.onPrimary
             )
-            Text("Info", color = MaterialTheme.colorScheme.onPrimary, fontSize = 12.sp)
+            Text("Info", color = NetflixTheme.colors.onPrimary, fontSize = 12.sp)
         }
     }
 }

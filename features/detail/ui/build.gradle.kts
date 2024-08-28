@@ -2,10 +2,12 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dagger.hilt.android)
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.core.ui"
+    namespace = "com.example.features.detail.ui"
     compileSdk = 34
 
     defaultConfig {
@@ -35,14 +37,26 @@ android {
 
 dependencies {
     implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
 
     implementation(libs.androidx.core.ktx)
-    implementation(platform(libs.androidx.compose.bom))
+
+    // Compose
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.material.icons.extended)
-    debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.coil.compose)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(platform(libs.androidx.compose.bom))
+    debugImplementation(libs.androidx.ui.tooling)
+
+    // Hilt
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    testImplementation(libs.junit)
 }

@@ -32,4 +32,6 @@ include(":core:domain")
 include(":features:home:data")
 include(":features:home:domain")
 include(":features:home:ui")
-include(":features:detail")
+
+// Detail
+include(":features:detail:ui")

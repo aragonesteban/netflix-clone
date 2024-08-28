@@ -10,7 +10,7 @@ import coil.compose.AsyncImage
 import com.example.core.ui.R
 
 @Composable
-fun RemoteImage(
+fun NetflixRemoteImage(
     url: String,
     contentScale: ContentScale,
     modifier: Modifier = Modifier

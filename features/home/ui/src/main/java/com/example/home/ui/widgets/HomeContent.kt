@@ -17,6 +17,7 @@ import com.example.core.domain.model.Media
 import com.example.core.domain.model.MediaList
 import com.example.home.ui.model.HomeContentType
 import com.example.home.ui.model.HomeMediaContentUi
+import com.example.ui.molecules.NetflixMediaCarousel
 import com.example.ui.theme.NetflixTheme
 
 @Composable
@@ -37,7 +38,7 @@ fun HomeContent(
                 item { HomeHero(movie = content.firstCategoryMediaList.items.first()) }
 
                 item {
-                    HomeCarousel(
+                    NetflixMediaCarousel(
                         itemsHome = content.firstCategoryMediaList.items.drop(1),
                         title = "Popular movies",
                         modifier = Modifier.padding(top = 22.dp)
@@ -47,7 +48,7 @@ fun HomeContent(
                 }
 
                 item {
-                    HomeCarousel(
+                    NetflixMediaCarousel(
                         itemsHome = content.secondCategoryMediaList.items,
                         title = "Now Playing Movies",
                         modifier = Modifier.padding(top = 8.dp)

@@ -1,4 +1,4 @@
-package com.example.home.ui.widgets
+package com.example.ui.molecules
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,24 +19,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.Media
-import com.example.ui.molecules.RemoteImage
 import com.example.ui.theme.NetflixTheme
 
 @Composable
-fun HomeCarousel(
+fun NetflixMediaCarousel(
     itemsHome: List<Media>,
-    title: String,
+    title: String? = null,
     modifier: Modifier = Modifier,
     onItemClicked: (Media) -> Unit,
 ) {
     Column(
         modifier = modifier
     ) {
-        Text(
-            text = title,
-            color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+        title?.let {
+            Text(
+                text = it,
+                color = NetflixTheme.colors.onPrimary,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
 
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
@@ -47,9 +47,14 @@ fun HomeCarousel(
                 .padding(vertical = 10.dp)
         ) {
             items(itemsHome) { item ->
-                CardItem(
-                    item = item,
-                    modifier = Modifier.clickable { onItemClicked(item) }
+                NetflixRemoteImage(
+                    url = item.poster,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .width(110.dp)
+                        .height(170.dp)
+                        .clip(RoundedCornerShape(6.dp))
+                        .clickable { onItemClicked(item) }
                 )
             }
         }
@@ -57,31 +62,10 @@ fun HomeCarousel(
 }
 
 @Composable
-fun <T> CardItem(
-    item: T,
-    modifier: Modifier = Modifier
-) {
-    val posterUrl = when (item) {
-        is Media -> item.poster
-        else -> null
-    }
-    posterUrl?.let {
-        RemoteImage(
-            url = it,
-            contentScale = ContentScale.Crop,
-            modifier = modifier
-                .width(110.dp)
-                .height(170.dp)
-                .clip(RoundedCornerShape(6.dp))
-        )
-    }
-}
-
-@Composable
 @Preview
 fun HomeCarouselPreview() {
     NetflixTheme {
-        HomeCarousel(
+        NetflixMediaCarousel(
             itemsHome = listOf(
                 Media(
                     id = 1,
