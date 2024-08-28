@@ -39,6 +39,8 @@ dependencies {
     implementation(project(":features:home:domain"))
     implementation(project(":core:ui"))
 
+    implementation(libs.androidx.core.ktx)
+
     // Compose
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -55,9 +57,5 @@ dependencies {
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
-    implementation(libs.androidx.core.ktx)
-
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

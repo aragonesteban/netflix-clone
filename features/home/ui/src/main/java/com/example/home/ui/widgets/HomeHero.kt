@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.home.domain.model.Media
+import com.example.core.domain.model.Media
 import com.example.ui.molecules.RemoteImage
 import com.example.ui.theme.NetflixTheme
 

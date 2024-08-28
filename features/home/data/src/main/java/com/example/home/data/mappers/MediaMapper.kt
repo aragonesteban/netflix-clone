@@ -1,9 +1,9 @@
 package com.example.home.data.mappers
 
-import com.example.data.utils.NetflixMapper
-import com.example.home.data.model.MediaResponse
-import com.example.home.domain.model.Media
-import com.example.home.domain.model.MediaList
+import com.example.core.data.config.utils.NetflixMapper
+import com.example.core.data.model.MediaResponse
+import com.example.core.domain.model.Media
+import com.example.core.domain.model.MediaList
 import javax.inject.Inject
 
 class MediaMapper @Inject constructor() : NetflixMapper<MediaResponse, MediaList> {

@@ -5,11 +5,12 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kotlin.serialization)
     id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.example.core.data"
     compileSdk = 34
 
     defaultConfig {
@@ -48,6 +49,7 @@ android {
 }
 
 dependencies {
+    api(project(":core:domain"))
 
     // Hilt
     implementation(libs.dagger.hilt.android)

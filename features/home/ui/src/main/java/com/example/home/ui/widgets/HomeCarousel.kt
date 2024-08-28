@@ -19,16 +19,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.home.domain.model.Media
+import com.example.core.domain.model.Media
 import com.example.ui.molecules.RemoteImage
 import com.example.ui.theme.NetflixTheme
 
 @Composable
-fun <T> HomeCarousel(
-    itemsHome: List<T>,
+fun HomeCarousel(
+    itemsHome: List<Media>,
     title: String,
     modifier: Modifier = Modifier,
-    onItemClicked: (T) -> Unit,
+    onItemClicked: (Media) -> Unit,
 ) {
     Column(
         modifier = modifier

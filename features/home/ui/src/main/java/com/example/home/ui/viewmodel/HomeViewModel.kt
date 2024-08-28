@@ -7,6 +7,7 @@ import com.example.home.domain.usecases.SeriesUseCase
 import com.example.home.ui.model.HomeMediaContentUi
 import com.example.home.ui.state.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -31,18 +32,15 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             moviesMediaContent?.let {
                 _uiState.value = HomeUiState.ShowMediaContent(it)
-            } ?: combine(
-                moviesUseCase.getPopularMovies(),
-                moviesUseCase.getUpcomingMovies()
-            ) { popularMovies, nowPlayingMovies ->
-                HomeMediaContentUi(popularMovies, nowPlayingMovies)
-            }
-                .onStart { _uiState.value = HomeUiState.Loading }
-                .catch { _uiState.value = HomeUiState.Error }
-                .collect {
-                    moviesMediaContent = it
-                    _uiState.value = HomeUiState.ShowMediaContent(it)
-                }
+            } ?: fetchContent(
+                fetchContent = {
+                    combine(
+                        moviesUseCase.getPopularMovies(),
+                        moviesUseCase.getUpcomingMovies()
+                    ) { popular, upcoming -> HomeMediaContentUi(popular, upcoming) }
+                },
+                onSuccess = { moviesMediaContent = it }
+            )
         }
     }
 
@@ -50,19 +48,30 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             seriesMediaContent?.let {
                 _uiState.value = HomeUiState.ShowMediaContent(it)
-            } ?: combine(
-                seriesUseCase.getPopularSeries(),
-                seriesUseCase.getTopRatedSeries()
-            ) { popularSeries, topRatedSeries ->
-                HomeMediaContentUi(popularSeries, topRatedSeries)
-            }
+            } ?: fetchContent(
+                fetchContent = {
+                    combine(
+                        seriesUseCase.getPopularSeries(),
+                        seriesUseCase.getTopRatedSeries()
+                    ) { popular, topRated -> HomeMediaContentUi(popular, topRated) }
+                },
+                onSuccess = { seriesMediaContent = it }
+            )
+        }
+    }
+
+    private fun fetchContent(
+        fetchContent: suspend () -> Flow<HomeMediaContentUi>,
+        onSuccess: (HomeMediaContentUi) -> Unit
+    ) {
+        viewModelScope.launch {
+            fetchContent()
                 .onStart { _uiState.value = HomeUiState.Loading }
                 .catch { _uiState.value = HomeUiState.Error }
                 .collect {
-                    seriesMediaContent = it
+                    onSuccess(it)
                     _uiState.value = HomeUiState.ShowMediaContent(it)
                 }
-
         }
     }
 }

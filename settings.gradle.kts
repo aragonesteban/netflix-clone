@@ -23,13 +23,13 @@ rootProject.name = "Netflix Clone"
 include(":app")
 include(":features")
 
-include(":features:movie")
-
 // Core
 include(":core:data")
 include(":core:ui")
+include(":core:domain")
 
 // Home
 include(":features:home:data")
 include(":features:home:domain")
 include(":features:home:ui")
+include(":features:detail")

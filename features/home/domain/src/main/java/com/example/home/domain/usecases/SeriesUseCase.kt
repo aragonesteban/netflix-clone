@@ -1,7 +1,7 @@
 package com.example.home.domain.usecases
 
-import com.example.home.domain.model.MediaList
-import com.example.home.domain.repository.SeriesRepository
+import com.example.core.domain.model.MediaList
+import com.example.core.domain.repositories.SeriesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

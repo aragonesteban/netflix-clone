@@ -1,6 +1,6 @@
 package com.example.home.ui.model
 
-import com.example.home.domain.model.MediaList
+import com.example.core.domain.model.MediaList
 
 data class HomeMediaContentUi(
     val firstCategoryMediaList: MediaList,

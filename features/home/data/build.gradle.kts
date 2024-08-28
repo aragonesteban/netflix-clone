@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dagger.hilt.android)
     id("kotlin-kapt")
 }
@@ -39,18 +38,10 @@ android {
 
 dependencies {
     implementation(project(":core:data"))
-    implementation(project(":features:home:domain"))
 
     // Dagger Hilt
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.compiler)
-
-    // Retrofit
-    implementation(libs.square.retrofit2)
-
-    // Kotlin Serialization
-    implementation(libs.square.converter.kotlinxSerialization)
-    implementation(libs.kotlinx.serialization.core)
 
     testImplementation(libs.junit)
 }
