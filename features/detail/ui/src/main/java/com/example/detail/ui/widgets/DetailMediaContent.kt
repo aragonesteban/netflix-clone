@@ -1,5 +1,7 @@
 package com.example.detail.ui.widgets
 
+import android.os.Build
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,34 +19,75 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.core.domain.model.MovieDetail
 import com.example.detail.ui.model.DetailMediaAction
 import com.example.ui.molecules.NetflixButton
 import com.example.ui.molecules.NetflixRemoteImage
 import com.example.ui.theme.NetflixTheme
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailMediaContent(
+    mediaDetail: MovieDetail,
+    onBackPress: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+    var showTrailer by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier.fillMaxSize()
     ) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S) {
+            DetailMediaBackdrop(mediaDetail.posterPath)
+        }
+
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(vertical = 32.dp)
+                .verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            DetailMediaHeader(mediaDetail)
+            DetailMediaInfo(mediaDetail) {
+                showTrailer = true
+            }
+            DetailMediaActions(
+                listOf(DetailMediaAction.Like, DetailMediaAction.Rate, DetailMediaAction.Share)
+            )
+            DetailMediaRecommendation()
+        }
+
         IconButton(
-            onClick = { },
+            onClick = { onBackPress() },
             modifier = Modifier
                 .padding(vertical = 16.dp)
                 .align(Alignment.TopStart)
@@ -56,29 +99,28 @@ fun DetailMediaContent(
             )
         }
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(vertical = 32.dp)
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            DetailMediaHeader()
-            DetailMediaInfo()
-            DetailMediaActions(
-                listOf(DetailMediaAction.Like, DetailMediaAction.Rate, DetailMediaAction.Share)
-            )
-            DetailMediaRecommendation()
+        if (showTrailer) {
+            DetailMediaTrailer(
+                trailerYoutubeId = mediaDetail.videoYoutubeKey,
+                sheetState = sheetState
+            ) {
+                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                    if (!sheetState.isVisible) {
+                        showTrailer = false
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
 fun DetailMediaHeader(
+    mediaDetail: MovieDetail,
     modifier: Modifier = Modifier
 ) {
     NetflixRemoteImage(
-        url = "",
+        url = mediaDetail.posterPath,
         contentScale = ContentScale.Crop,
         modifier = modifier
             .padding(bottom = 16.dp)
@@ -88,7 +130,7 @@ fun DetailMediaHeader(
     )
 
     Text(
-        text = "Movie Title",
+        text = mediaDetail.title,
         style = MaterialTheme.typography.headlineSmall,
         fontWeight = FontWeight.SemiBold,
         color = MaterialTheme.colorScheme.onPrimary
@@ -97,12 +139,18 @@ fun DetailMediaHeader(
 
 @Composable
 fun DetailMediaInfo(
-    modifier: Modifier = Modifier
+    mediaDetail: MovieDetail,
+    modifier: Modifier = Modifier,
+    onClickPlay: () -> Unit
 ) {
-    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+    Column(
+        modifier = modifier
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Row {
             Text(
-                text = "2023",
+                text = mediaDetail.year,
                 color = NetflixTheme.colors.onPrimary.copy(alpha = .4F),
                 style = MaterialTheme.typography.bodySmall
             )
@@ -112,7 +160,7 @@ fun DetailMediaInfo(
 
         NetflixButton(
             text = "Play",
-            onClick = { /*TODO*/ },
+            onClick = { onClickPlay() },
             icon = Icons.Default.PlayArrow,
             modifier = Modifier.fillMaxWidth()
         )
@@ -121,7 +169,7 @@ fun DetailMediaInfo(
 
         NetflixButton(
             text = "Download",
-            onClick = { /*TODO*/ },
+            onClick = { },
             icon = Icons.Default.Download,
             contentColor = NetflixTheme.colors.onPrimary,
             containerColor = NetflixTheme.colors.onPrimary.copy(alpha = .1F),
@@ -131,9 +179,39 @@ fun DetailMediaInfo(
         Spacer(modifier = Modifier.size(12.dp))
 
         Text(
-            text = "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat,",
+            text = mediaDetail.overview,
             color = NetflixTheme.colors.onPrimary,
             style = MaterialTheme.typography.bodySmall
+        )
+    }
+}
+
+@Composable
+fun DetailMediaBackdrop(
+    poster: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(470.dp)
+    ) {
+        NetflixRemoteImage(
+            url = poster,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .blur(radiusX = 50.dp, radiusY = 50.dp)
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .align(Alignment.BottomCenter)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(Color.Transparent, Color.Black)
+                    )
+                )
         )
     }
 }
@@ -142,6 +220,22 @@ fun DetailMediaInfo(
 @Preview
 fun DetailMediaContentPreview() {
     NetflixTheme {
-        DetailMediaContent()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(NetflixTheme.colors.background)
+        ) {
+            DetailMediaContent(
+                mediaDetail = MovieDetail(
+                    id = 1,
+                    title = "Deadpool & Wolverine",
+                    overview = "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat,",
+                    year = "2023",
+                    posterPath = "",
+                    videoYoutubeKey = ""
+                ),
+                onBackPress = {}
+            )
+        }
     }
 }

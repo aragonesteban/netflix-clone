@@ -1,6 +1,7 @@
 package com.example.home.ui.widgets
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,7 +38,8 @@ import com.example.ui.theme.NetflixTheme
 @Composable
 fun HomeHero(
     movie: Media,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onMediaClick: (Int) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -56,10 +58,7 @@ fun HomeHero(
                 .align(Alignment.BottomCenter)
                 .background(
                     brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Transparent,
-                            Color.Black
-                        )
+                        colors = listOf(Color.Transparent, Color.Black)
                     )
                 )
         )
@@ -81,7 +80,7 @@ fun HomeHero(
             )
 
             HomeHeroActions(
-                movie = movie,
+                onMediaClick = { onMediaClick(movie.id) },
                 modifier = Modifier.padding(top = 16.dp)
             )
         }
@@ -90,8 +89,8 @@ fun HomeHero(
 
 @Composable
 fun HomeHeroActions(
-    movie: Media,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onMediaClick: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(30.dp, Alignment.CenterHorizontally),
@@ -117,6 +116,7 @@ fun HomeHeroActions(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.clickable { onMediaClick() }
         ) {
             Icon(
                 imageVector = Icons.Outlined.Info,
@@ -138,7 +138,8 @@ fun HomeHeroPreview() {
                 id = 0,
                 poster = "https://image.tmdb.org/t/p/w500/6Wdl9N6dL0Hi0T1qJLWSz6gMLbd.jpg",
                 title = "The Tomorrow War"
-            )
+            ),
+            onMediaClick = {}
         )
     }
 }

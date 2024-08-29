@@ -26,6 +26,8 @@ lifecycle = "2.8.4"
 navigation = "2.7.7"
 coil = "2.7.0"
 material-icons = "1.6.8"
+android-youtube-player = "11.1.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +65,7 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons" }
+android-youtube-player-core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "android-youtube-player" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

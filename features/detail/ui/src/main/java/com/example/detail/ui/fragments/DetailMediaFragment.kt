@@ -7,12 +7,17 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.detail.ui.screen.DetailMediaScreen
 import com.example.ui.theme.NetflixTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailMediaFragment : Fragment() {
+
+    private val movieId: Int by lazy {
+        requireNotNull(arguments?.getInt("movieId"))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +29,10 @@ class DetailMediaFragment : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             NetflixTheme {
-                DetailMediaScreen()
+                DetailMediaScreen(
+                    mediaId = movieId,
+                    onBackPress = { findNavController().popBackStack() }
+                )
             }
         }
     }

@@ -25,6 +25,7 @@ fun HomeContent(
     mediaContent: HomeMediaContentUi,
     currentContentType: HomeContentType,
     onContentTypeSelected: (HomeContentType) -> Unit,
+    onMediaClick: (Int) -> Unit,
 ) {
     Box {
         AnimatedContent(
@@ -35,16 +36,19 @@ fun HomeContent(
             LazyColumn(
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
-                item { HomeHero(movie = content.firstCategoryMediaList.items.first()) }
+                item {
+                    HomeHero(
+                        movie = content.firstCategoryMediaList.items.first(),
+                        onMediaClick = onMediaClick
+                    )
+                }
 
                 item {
                     NetflixMediaCarousel(
                         itemsHome = content.firstCategoryMediaList.items.drop(1),
                         title = "Popular movies",
                         modifier = Modifier.padding(top = 22.dp)
-                    ) {
-                        // Handle carousel item clicks here
-                    }
+                    ) { onMediaClick(it.id) }
                 }
 
                 item {
@@ -52,9 +56,7 @@ fun HomeContent(
                         itemsHome = content.secondCategoryMediaList.items,
                         title = "Now Playing Movies",
                         modifier = Modifier.padding(top = 8.dp)
-                    ) {
-                        // Handle carousel item clicks here
-                    }
+                    ) { onMediaClick(it.id) }
                 }
             }
         }
@@ -99,6 +101,7 @@ fun HomeContentPreview() {
             ),
             currentContentType = HomeContentType.Movies,
             onContentTypeSelected = { },
+            onMediaClick = { },
         )
     }
 }

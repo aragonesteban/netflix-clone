@@ -35,3 +35,5 @@ include(":features:home:ui")
 
 // Detail
 include(":features:detail:ui")
+include(":features:detail:data")
+include(":features:detail:domain")

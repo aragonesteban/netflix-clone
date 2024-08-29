@@ -1,6 +1,5 @@
 package com.example.detail.ui.widgets
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,9 +30,7 @@ fun DetailMediaActions(
 
     ) {
         actions.forEach { action ->
-            DetailMediaActionsItem(action = action) {
-
-            }
+            DetailMediaActionsItem(action = action)
         }
     }
 }
@@ -41,12 +38,11 @@ fun DetailMediaActions(
 @Composable
 fun DetailMediaActionsItem(
     action: DetailMediaAction,
-    modifier: Modifier = Modifier,
-    onClick: (DetailMediaAction) -> Unit
+    modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.clickable { onClick(action) }
+        modifier = modifier
     ) {
         Icon(
             imageVector = action.icon,

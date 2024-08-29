@@ -61,6 +61,9 @@ dependencies {
     implementation(project(":features:home:data"))
     implementation(project(":features:home:domain"))
     implementation(project(":features:home:ui"))
+    implementation(project(":features:detail:data"))
+    implementation(project(":features:detail:domain"))
+    implementation(project(":features:detail:ui"))
 
     implementation("androidx.compose.runtime:runtime:1.6.8")
 

@@ -20,10 +20,12 @@ import com.example.home.ui.model.HomeContentType
 import com.example.home.ui.state.HomeUiState
 import com.example.home.ui.viewmodel.HomeViewModel
 import com.example.home.ui.widgets.HomeContent
+import com.example.ui.theme.NetflixTheme
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onMediaClick: (Int) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState().value
 
@@ -38,7 +40,7 @@ fun HomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.background)
+            .background(color = NetflixTheme.colors.background)
     ) {
         when (uiState) {
             is HomeUiState.Loading -> {
@@ -58,7 +60,8 @@ fun HomeScreen(
                                 HomeContentType.Movies -> viewModel.getMovies()
                                 HomeContentType.Series -> viewModel.getSeries()
                             }
-                        }
+                        },
+                        onMediaClick = onMediaClick
                     )
                 }
             }

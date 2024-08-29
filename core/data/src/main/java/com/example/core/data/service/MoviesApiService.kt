@@ -2,9 +2,11 @@ package com.example.core.data.service
 
 import com.example.core.data.config.utils.Params
 import com.example.core.data.model.MediaResponse
+import com.example.core.data.model.MovieDetailResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MoviesApiService {
 
@@ -12,4 +14,10 @@ interface MoviesApiService {
     suspend fun getMoviesByCategory(
        @Path(Params.CATEGORY) category: String
     ): Response<MediaResponse>
+
+    @GET("movie/{${Params.MOVIE_ID}}")
+    suspend fun getMovieDetailById(
+        @Path(Params.MOVIE_ID) movieId: Int,
+        @Query(Params.APPEND_TO_RESPONSE) appendToResponse: String = Params.VIDEOS
+    ): Response<MovieDetailResponse>
 }
