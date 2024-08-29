@@ -39,7 +39,7 @@ import com.example.ui.theme.NetflixTheme
 fun HomeHero(
     movie: Media,
     modifier: Modifier = Modifier,
-    onMediaClick: (Int) -> Unit
+    onMediaClick: (mediaId: Int, playVideo: Boolean) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -80,7 +80,7 @@ fun HomeHero(
             )
 
             HomeHeroActions(
-                onMediaClick = { onMediaClick(movie.id) },
+                onMediaClick = { playVideo -> onMediaClick(movie.id, playVideo) },
                 modifier = Modifier.padding(top = 16.dp)
             )
         }
@@ -90,7 +90,7 @@ fun HomeHero(
 @Composable
 fun HomeHeroActions(
     modifier: Modifier = Modifier,
-    onMediaClick: () -> Unit
+    onMediaClick: (playVideo: Boolean) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(30.dp, Alignment.CenterHorizontally),
@@ -98,7 +98,7 @@ fun HomeHeroActions(
         modifier = modifier.fillMaxWidth()
     ) {
 
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Outlined.FavoriteBorder,
                 contentDescription = "",
@@ -108,7 +108,7 @@ fun HomeHeroActions(
 
         NetflixButton(
             text = "Play",
-            onClick = { /*TODO*/ },
+            onClick = { onMediaClick(true) },
             icon = Icons.Default.PlayArrow,
             containerColor = NetflixTheme.colors.onPrimary,
             contentColor = NetflixTheme.colors.onSecondary
@@ -116,7 +116,7 @@ fun HomeHeroActions(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.clickable { onMediaClick() }
+            modifier = Modifier.clickable { onMediaClick(false) }
         ) {
             Icon(
                 imageVector = Icons.Outlined.Info,
@@ -139,7 +139,7 @@ fun HomeHeroPreview() {
                 poster = "https://image.tmdb.org/t/p/w500/6Wdl9N6dL0Hi0T1qJLWSz6gMLbd.jpg",
                 title = "The Tomorrow War"
             ),
-            onMediaClick = {}
+            onMediaClick = { _, _ -> }
         )
     }
 }

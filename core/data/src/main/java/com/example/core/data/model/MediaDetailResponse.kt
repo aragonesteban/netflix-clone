@@ -4,28 +4,35 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MovieDetailResponse(
+data class MediaDetailResponse(
     @SerialName("id")
     val id: Int?,
     @SerialName("title")
-    val title: String?,
+    val title: String? = null,
+    @SerialName("name")
+    val name: String? = null,
     @SerialName("overview")
     val overview: String?,
     @SerialName("poster_path")
     val posterPath: String?,
     @SerialName("release_date")
-    val releaseDate: String?,
+    val releaseDate: String? = null,
+    @SerialName("first_air_date")
+    val firstAirDate: String? = null,
     @SerialName("videos")
-    val videos: MovieVideoListResponse?
+    val videos: MediaVideoListResponse? = null
 ) {
     @Serializable
-    data class MovieVideoListResponse(
-        val results: List<MovieVideoResponse>?
+    data class MediaVideoListResponse(
+        @SerialName("results")
+        val results: List<MediaVideoResponse>?
     )
 
     @Serializable
-    data class MovieVideoResponse(
+    data class MediaVideoResponse(
+        @SerialName("key")
         val key: String?,
+        @SerialName("official")
         val official: Boolean?
     )
 }

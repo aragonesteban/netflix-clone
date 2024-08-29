@@ -24,8 +24,8 @@ import com.example.ui.theme.NetflixTheme
 @Composable
 fun NetflixMediaCarousel(
     itemsHome: List<Media>,
-    title: String? = null,
     modifier: Modifier = Modifier,
+    title: String? = null,
     onItemClicked: (Media) -> Unit,
 ) {
     Column(

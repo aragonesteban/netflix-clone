@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavDeepLinkRequest
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.fragment.findNavController
+import com.example.core.domain.model.MediaType
 import com.example.home.ui.screen.HomeScreen
+import com.example.home.ui.viewmodel.HomeViewModel
+import com.example.ui.navigation.navigateToMovieDetail
 import com.example.ui.theme.NetflixTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,17 +29,23 @@ class HomeFragment : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             NetflixTheme {
-                HomeScreen { mediaId ->
-                    goToMovieDetail(mediaId)
-                }
+                val viewModel = hiltViewModel<HomeViewModel>()
+
+                HomeScreen(
+                    viewModel = viewModel,
+                    onMediaClick = { mediaId, mediaType, playVideo ->
+                        findNavController().navigateToMovieDetail(mediaId, mediaType, playVideo)
+                    },
+                    onGetMediaContent = { mediaType ->
+                        when (mediaType) {
+                            MediaType.MOVIES -> viewModel.getMovies()
+                            MediaType.SERIES -> viewModel.getSeries()
+                        }
+                    }
+                )
+
             }
         }
     }
 
-    private fun goToMovieDetail(mediaId: Int) {
-        val request = NavDeepLinkRequest.Builder
-            .fromUri("netflix-clone://com.example.netflixclone/detail_fragment/$mediaId".toUri())
-            .build()
-        findNavController().navigate(request)
-    }
 }

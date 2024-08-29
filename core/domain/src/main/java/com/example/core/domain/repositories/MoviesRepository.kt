@@ -1,10 +1,11 @@
 package com.example.core.domain.repositories
 
 import com.example.core.domain.model.MediaList
-import com.example.core.domain.model.MovieDetail
+import com.example.core.domain.model.MediaDetail
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
     suspend fun getMoviesByCategory(category: String): Flow<MediaList>
-    suspend fun getMovieDetailById(movieId: Int): Flow<MovieDetail>
+    suspend fun getMovieDetailById(movieId: Int): Flow<MediaDetail>
+    suspend fun getSimilarMoviesById(movieId: Int): Flow<MediaList>
 }

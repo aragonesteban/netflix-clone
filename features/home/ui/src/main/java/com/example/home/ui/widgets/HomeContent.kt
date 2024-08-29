@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.Media
 import com.example.core.domain.model.MediaList
-import com.example.home.ui.model.HomeContentType
+import com.example.core.domain.model.MediaType
 import com.example.home.ui.model.HomeMediaContentUi
 import com.example.ui.molecules.NetflixMediaCarousel
 import com.example.ui.theme.NetflixTheme
@@ -23,9 +23,9 @@ import com.example.ui.theme.NetflixTheme
 @Composable
 fun HomeContent(
     mediaContent: HomeMediaContentUi,
-    currentContentType: HomeContentType,
-    onContentTypeSelected: (HomeContentType) -> Unit,
-    onMediaClick: (Int) -> Unit,
+    currentMediaType: MediaType,
+    onMediaTypeSelected: (MediaType) -> Unit,
+    onMediaClick: (Int, Boolean) -> Unit
 ) {
     Box {
         AnimatedContent(
@@ -48,7 +48,7 @@ fun HomeContent(
                         itemsHome = content.firstCategoryMediaList.items.drop(1),
                         title = "Popular movies",
                         modifier = Modifier.padding(top = 22.dp)
-                    ) { onMediaClick(it.id) }
+                    ) { onMediaClick(it.id, false) }
                 }
 
                 item {
@@ -56,15 +56,15 @@ fun HomeContent(
                         itemsHome = content.secondCategoryMediaList.items,
                         title = "Now Playing Movies",
                         modifier = Modifier.padding(top = 8.dp)
-                    ) { onMediaClick(it.id) }
+                    ) { onMediaClick(it.id, false) }
                 }
             }
         }
 
         HomeContentActions(
             modifier = Modifier.align(Alignment.TopCenter),
-            currentContentType = currentContentType,
-            onContentTypeSelected = onContentTypeSelected
+            currentMediaType = currentMediaType,
+            onMediaTypeSelected = onMediaTypeSelected
         )
     }
 }
@@ -99,9 +99,9 @@ fun HomeContentPreview() {
                     )
                 )
             ),
-            currentContentType = HomeContentType.Movies,
-            onContentTypeSelected = { },
-            onMediaClick = { },
+            currentMediaType = MediaType.MOVIES,
+            onMediaTypeSelected = { },
+            onMediaClick = { _, _ -> },
         )
     }
 }

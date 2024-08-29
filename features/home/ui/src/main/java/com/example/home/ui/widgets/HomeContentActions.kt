@@ -18,14 +18,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.home.ui.model.HomeContentType
+import com.example.core.domain.model.MediaType
 import com.example.ui.theme.NetflixTheme
 
 @Composable
 fun HomeContentActions(
-    currentContentType: HomeContentType,
+    currentMediaType: MediaType,
     modifier: Modifier = Modifier,
-    onContentTypeSelected: (HomeContentType) -> Unit
+    onMediaTypeSelected: (MediaType) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
@@ -33,12 +33,12 @@ fun HomeContentActions(
             .fillMaxWidth()
             .padding(top = 16.dp),
     ) {
-        listOf(HomeContentType.Movies, HomeContentType.Series).forEach { content ->
+        listOf(MediaType.MOVIES, MediaType.SERIES).forEach { content ->
             OutlinedButton(
-                onClick = { onContentTypeSelected(content) },
+                onClick = { onMediaTypeSelected(content) },
                 contentPadding = PaddingValues(horizontal = 20.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (currentContentType == content)
+                    containerColor = if (currentMediaType == content)
                         MaterialTheme.colorScheme.onPrimary.copy(alpha = .4F)
                     else
                         Color.Transparent
@@ -49,7 +49,7 @@ fun HomeContentActions(
                 )
             ) {
                 Text(
-                    text = content.name,
+                    text = content.value,
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 12.sp,
@@ -64,7 +64,7 @@ fun HomeContentActions(
 fun HomeContentActionsPreview() {
     NetflixTheme {
         HomeContentActions(
-            currentContentType = HomeContentType.Movies
+            currentMediaType = MediaType.MOVIES
         ) {}
     }
 }

@@ -4,4 +4,6 @@ class Media(
     val id: Int,
     val poster: String,
     val title: String
-)
+) {
+
+}

@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.core.domain.model.MediaType
 import com.example.detail.ui.screen.DetailMediaScreen
+import com.example.ui.navigation.navigateToMovieDetail
 import com.example.ui.theme.NetflixTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +20,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailMediaFragment : Fragment() {
 
     private val movieId: Int by lazy {
-        requireNotNull(arguments?.getInt("movieId"))
+        requireNotNull(arguments?.getInt("mediaId"))
+    }
+
+    private val mediaType: String by lazy {
+        requireNotNull(arguments?.getString("mediaType"))
+    }
+
+    private val playVideo: Boolean by lazy {
+        requireNotNull(arguments?.getBoolean("playVideo"))
     }
 
     override fun onCreateView(
@@ -31,7 +43,10 @@ class DetailMediaFragment : Fragment() {
             NetflixTheme {
                 DetailMediaScreen(
                     mediaId = movieId,
-                    onBackPress = { findNavController().popBackStack() }
+                    playVideo = playVideo,
+                    mediaType = MediaType.valueOf(mediaType.uppercase()),
+                    onBackPress = { findNavController().popBackStack() },
+                    onMediaClick = { mediaId, mediaType -> findNavController().navigateToMovieDetail(mediaId, mediaType) }
                 )
             }
         }

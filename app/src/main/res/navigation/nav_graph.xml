@@ -12,10 +12,21 @@
         android:id="@+id/detail_fragment"
         android:name="com.example.detail.ui.fragments.DetailMediaFragment">
         <argument
-            android:name="movieId"
+            android:name="mediaId"
             app:argType="integer"
             app:nullable="false" />
-        <deepLink app:uri="netflix-clone://com.example.netflixclone/detail_fragment/{movieId}" />
+
+        <argument
+            android:name="mediaType"
+            app:argType="string"
+            app:nullable="false" />
+
+        <argument
+            android:name="playVideo"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <deepLink app:uri="netflix-clone://com.example.netflixclone/detail_fragment/{mediaId}/{mediaType}/{playVideo}" />
     </fragment>
 
 </navigation>

@@ -1,13 +1,14 @@
 package com.example.detail.ui.state
 
-import com.example.core.domain.model.MovieDetail
+import com.example.core.domain.model.MediaList
+import com.example.core.domain.model.MediaDetail
 
 sealed interface MediaDetailUiState {
     data object Loading : MediaDetailUiState
 
     data class ShowMediaDetailContent(
-        val mediaDetail: MovieDetail
+        val movieDetail: Pair<MediaDetail, MediaList>
     ) : MediaDetailUiState
 
-    data object Error : MediaDetailUiState
+    data class Error(val message: String) : MediaDetailUiState
 }

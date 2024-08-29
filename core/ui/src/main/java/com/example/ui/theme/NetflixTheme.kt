@@ -54,12 +54,6 @@ fun NetflixTheme(
         LightColorPalette
     }
 
-    MaterialTheme(
-        colorScheme = colors,
-        typography = MaterialTheme.typography,
-        content = content
-    )
-
     CompositionLocalProvider(LocalNetflixColors provides colors) {
         MaterialTheme(
             colorScheme = colors,

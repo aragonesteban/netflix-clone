@@ -12,7 +12,7 @@ data class MediaResponse(
         @SerialName("id")
         val id: Int?,
         @SerialName("poster_path")
-        val posterPath: String?,
+        val posterPath: String? = null,
         @SerialName("title")
         val title: String? = null,
         @SerialName("name")

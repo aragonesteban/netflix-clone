@@ -2,7 +2,7 @@ package com.example.core.data.service
 
 import com.example.core.data.config.utils.Params
 import com.example.core.data.model.MediaResponse
-import com.example.core.data.model.MovieDetailResponse
+import com.example.core.data.model.MediaDetailResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -19,5 +19,10 @@ interface MoviesApiService {
     suspend fun getMovieDetailById(
         @Path(Params.MOVIE_ID) movieId: Int,
         @Query(Params.APPEND_TO_RESPONSE) appendToResponse: String = Params.VIDEOS
-    ): Response<MovieDetailResponse>
+    ): Response<MediaDetailResponse>
+
+    @GET("movie/{${Params.MOVIE_ID}}/similar")
+    suspend fun getSimilarMoviesById(
+        @Path(Params.MOVIE_ID) movieId: Int
+    ): Response<MediaResponse>
 }

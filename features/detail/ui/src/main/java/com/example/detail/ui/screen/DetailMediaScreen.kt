@@ -8,9 +8,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.domain.model.MediaType
 import com.example.detail.ui.state.MediaDetailUiState
 import com.example.detail.ui.viewmodel.DetailMediaViewModel
 import com.example.detail.ui.widgets.DetailMediaContent
@@ -19,13 +21,16 @@ import com.example.ui.theme.NetflixTheme
 @Composable
 fun DetailMediaScreen(
     mediaId: Int,
+    mediaType: MediaType,
+    playVideo: Boolean,
     onBackPress: () -> Unit,
+    onMediaClick: (Int, MediaType) -> Unit,
     viewModel: DetailMediaViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.uiState.collectAsState().value
 
-    LaunchedEffect(true) {
-        viewModel.getMovieDetailById(mediaId)
+    LaunchedEffect(mediaId) {
+        viewModel.getMediaDetailById(mediaId, mediaType)
     }
 
     Box(
@@ -38,13 +43,18 @@ fun DetailMediaScreen(
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 
             is MediaDetailUiState.ShowMediaDetailContent ->
-                DetailMediaContent(
-                    mediaDetail = uiState.mediaDetail,
-                    onBackPress = onBackPress
-                )
+                with(uiState) {
+                    DetailMediaContent(
+                        mediaDetail = movieDetail.first,
+                        similarMovies = movieDetail.second,
+                        playVideo = playVideo,
+                        onBackPress = onBackPress,
+                        onMediaClick = { mediaId -> onMediaClick(mediaId, mediaType) }
+                    )
+                }
 
-            MediaDetailUiState.Error -> {
-                Text(text = "Error")
+            is MediaDetailUiState.Error -> {
+                Text(text = "Error ${uiState.message}", color = NetflixTheme.colors.onPrimary)
             }
         }
     }

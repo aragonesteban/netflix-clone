@@ -2,21 +2,22 @@ package com.example.detail.data.mappers
 
 import android.util.Log
 import com.example.core.data.config.utils.NetflixMapper
-import com.example.core.data.model.MovieDetailResponse
-import com.example.core.domain.model.MovieDetail
+import com.example.core.data.model.MediaDetailResponse
+import com.example.core.data.utils.mapPosterImage
+import com.example.core.domain.model.MediaDetail
 import javax.inject.Inject
 
-class MovieDetailMapper @Inject constructor() : NetflixMapper<MovieDetailResponse, MovieDetail> {
+class MediaDetailMapper @Inject constructor() : NetflixMapper<MediaDetailResponse, MediaDetail> {
 
-    override fun map(input: MovieDetailResponse): MovieDetail {
+    override fun map(input: MediaDetailResponse): MediaDetail {
         return try {
             with(input) {
-                MovieDetail(
+                MediaDetail(
                     id = requireNotNull(id) { "id is required" },
-                    title = requireNotNull(title) { "title is required" },
+                    title = title ?: name ?: "",
                     overview = overview ?: "",
-                    posterPath = "https://image.tmdb.org/t/p/original$posterPath",
-                    year = releaseDate ?: "",
+                    posterPath = posterPath.mapPosterImage("original"),
+                    year = releaseDate?.let(::mapYear) ?: firstAirDate?.let(::mapYear) ?: "",
                     videoYoutubeKey = mapVideoYoutubeKey(videos?.results)
                 )
             }
@@ -27,13 +28,16 @@ class MovieDetailMapper @Inject constructor() : NetflixMapper<MovieDetailRespons
     }
 
     private fun mapVideoYoutubeKey(
-        results: List<MovieDetailResponse.MovieVideoResponse>?
+        results: List<MediaDetailResponse.MediaVideoResponse>?
     ): String {
         return results
             ?.firstOrNull { it.official == true }
             ?.key
             ?: ""
     }
+
+    private fun mapYear(releaseDate: String): String =
+        releaseDate.split("-").first()
 
     private companion object {
         const val TAG = "MovieDetailMapper"

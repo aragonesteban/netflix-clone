@@ -1,9 +1,9 @@
 package com.example.detail.data.di
 
 import com.example.core.data.config.utils.NetflixMapper
-import com.example.core.data.model.MovieDetailResponse
-import com.example.core.domain.model.MovieDetail
-import com.example.detail.data.mappers.MovieDetailMapper
+import com.example.core.data.model.MediaDetailResponse
+import com.example.core.domain.model.MediaDetail
+import com.example.detail.data.mappers.MediaDetailMapper
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ import dagger.hilt.android.components.ViewModelComponent
 interface DetailDataModule {
 
     @Binds
-    fun bindsDetailMapper(
-        mapper: MovieDetailMapper
-    ): NetflixMapper<MovieDetailResponse, MovieDetail>
+    fun bindsMediaDetailMapper(
+        mapper: MediaDetailMapper
+    ): NetflixMapper<MediaDetailResponse, MediaDetail>
 }

@@ -27,50 +27,51 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.Media
+import com.example.core.domain.model.MediaList
+import com.example.detail.ui.model.DetailRecommendationType
 import com.example.ui.molecules.NetflixMediaCarousel
 import com.example.ui.theme.NetflixTheme
 
-enum class RecommendationType(val value: String) {
-    Similar("Similar"),
-    Trailers("Trailers")
-}
-
 @Composable
 fun DetailMediaRecommendation(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    similarMedia: MediaList,
+    onMediaClick: (Int) -> Unit
 ) {
     var currentRecommendation by rememberSaveable {
-        mutableStateOf(RecommendationType.Similar)
+        mutableStateOf(
+            if (similarMedia.items.isNotEmpty()) {
+                DetailRecommendationType.Similar
+            } else {
+                DetailRecommendationType.Trailers
+            }
+        )
     }
 
     Column(modifier = modifier) {
-        DetailMediaRecommendationTabs(currentRecommendation) {
+        DetailMediaRecommendationTabs(
+            currentRecommendation = currentRecommendation,
+            showSimilarTab = similarMedia.items.isNotEmpty()
+        ) {
             currentRecommendation = it
         }
-
-        NetflixMediaCarousel(
-            itemsHome = listOf(
-                Media(
-                    id = 1,
-                    title = "Movie 1",
-                    poster = ""
-                ),
-                Media(
-                    id = 2,
-                    title = "Movie 2",
-                    poster = ""
-                )
-            ),
-            modifier = Modifier.padding(top = 12.dp)
-        ) { }
+        if (similarMedia.items.isNotEmpty()) {
+            NetflixMediaCarousel(
+                itemsHome = similarMedia.items,
+                modifier = Modifier.padding(top = 12.dp)
+            ) {
+                onMediaClick(it.id)
+            }
+        }
     }
 }
 
 @Composable
 fun DetailMediaRecommendationTabs(
-    currentRecommendation: RecommendationType,
+    currentRecommendation: DetailRecommendationType,
+    showSimilarTab: Boolean,
     modifier: Modifier = Modifier,
-    onRecommendationSelected: (RecommendationType) -> Unit
+    onRecommendationSelected: (DetailRecommendationType) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -78,7 +79,13 @@ fun DetailMediaRecommendationTabs(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
-        RecommendationType.entries.forEach { recommendation ->
+        val recommendations = if (showSimilarTab) {
+            DetailRecommendationType.entries
+        } else {
+            DetailRecommendationType.entries.filter { it != DetailRecommendationType.Similar }
+        }
+
+        recommendations.forEach { recommendation ->
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
@@ -115,6 +122,22 @@ fun DetailMediaRecommendationTabs(
 @Preview
 fun DetailMediaSuggestedPreview() {
     NetflixTheme {
-        DetailMediaRecommendation()
+        DetailMediaRecommendation(
+            similarMedia = MediaList(
+                items = listOf(
+                    Media(
+                        id = 1,
+                        title = "Movie 1",
+                        poster = ""
+                    ),
+                    Media(
+                        id = 2,
+                        title = "Movie 2",
+                        poster = ""
+                    )
+                )
+            ),
+            onMediaClick = {}
+        )
     }
 }

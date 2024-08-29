@@ -51,9 +51,6 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.ui.tooling)
 
-    // Navigation Component
-    implementation(libs.androidx.navigation.fragment.ktx)
-
     // Hilt
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.compiler)

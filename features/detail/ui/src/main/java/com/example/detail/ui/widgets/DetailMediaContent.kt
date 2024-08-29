@@ -39,9 +39,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.core.domain.model.MovieDetail
+import com.example.core.domain.model.Media
+import com.example.core.domain.model.MediaList
+import com.example.core.domain.model.MediaDetail
 import com.example.detail.ui.model.DetailMediaAction
 import com.example.ui.molecules.NetflixButton
 import com.example.ui.molecules.NetflixRemoteImage
@@ -51,16 +54,19 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailMediaContent(
-    mediaDetail: MovieDetail,
+    mediaDetail: MediaDetail,
+    similarMovies: MediaList,
+    playVideo: Boolean,
     onBackPress: () -> Unit,
-    modifier: Modifier = Modifier
+    onMediaClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
-    var showTrailer by remember { mutableStateOf(false) }
+    var showTrailer by remember { mutableStateOf(playVideo) }
 
     Box(
         modifier = modifier.fillMaxSize()
@@ -83,7 +89,10 @@ fun DetailMediaContent(
             DetailMediaActions(
                 listOf(DetailMediaAction.Like, DetailMediaAction.Rate, DetailMediaAction.Share)
             )
-            DetailMediaRecommendation()
+            DetailMediaRecommendation(
+                similarMedia = similarMovies,
+                onMediaClick = { mediaId -> onMediaClick(mediaId) }
+            )
         }
 
         IconButton(
@@ -116,13 +125,12 @@ fun DetailMediaContent(
 
 @Composable
 fun DetailMediaHeader(
-    mediaDetail: MovieDetail,
-    modifier: Modifier = Modifier
+    mediaDetail: MediaDetail
 ) {
     NetflixRemoteImage(
         url = mediaDetail.posterPath,
         contentScale = ContentScale.Crop,
-        modifier = modifier
+        modifier = Modifier
             .padding(bottom = 16.dp)
             .width(130.dp)
             .height(190.dp)
@@ -133,13 +141,15 @@ fun DetailMediaHeader(
         text = mediaDetail.title,
         style = MaterialTheme.typography.headlineSmall,
         fontWeight = FontWeight.SemiBold,
-        color = MaterialTheme.colorScheme.onPrimary
+        color = MaterialTheme.colorScheme.onPrimary,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.padding(horizontal = 16.dp)
     )
 }
 
 @Composable
 fun DetailMediaInfo(
-    mediaDetail: MovieDetail,
+    mediaDetail: MediaDetail,
     modifier: Modifier = Modifier,
     onClickPlay: () -> Unit
 ) {
@@ -226,7 +236,7 @@ fun DetailMediaContentPreview() {
                 .background(NetflixTheme.colors.background)
         ) {
             DetailMediaContent(
-                mediaDetail = MovieDetail(
+                mediaDetail = MediaDetail(
                     id = 1,
                     title = "Deadpool & Wolverine",
                     overview = "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat,",
@@ -234,7 +244,23 @@ fun DetailMediaContentPreview() {
                     posterPath = "",
                     videoYoutubeKey = ""
                 ),
-                onBackPress = {}
+                onBackPress = {},
+                similarMovies = MediaList(
+                    items = listOf(
+                        Media(
+                            id = 1,
+                            title = "Movie 1",
+                            poster = ""
+                        ),
+                        Media(
+                            id = 2,
+                            title = "Movie 2",
+                            poster = ""
+                        )
+                    )
+                ),
+                onMediaClick = {},
+                playVideo = false
             )
         }
     }
