@@ -1,7 +1,6 @@
 package com.example.core.data.repositories
 
 import android.content.Context
-import android.net.http.NetworkException
 import com.example.core.data.config.utils.NetflixMapper
 import com.example.core.data.config.utils.handleNetworkResult
 import com.example.core.data.config.utils.handleRequest

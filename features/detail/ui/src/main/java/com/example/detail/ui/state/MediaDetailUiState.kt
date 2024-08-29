@@ -1,7 +1,7 @@
 package com.example.detail.ui.state
 
-import com.example.core.domain.model.MediaList
 import com.example.core.domain.model.MediaDetail
+import com.example.core.domain.model.MediaList
 
 sealed interface MediaDetailUiState {
     data object Loading : MediaDetailUiState

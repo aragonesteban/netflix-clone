@@ -1,7 +1,7 @@
 package com.example.detail.domain.usecases
 
-import com.example.core.domain.model.MediaList
 import com.example.core.domain.model.MediaDetail
+import com.example.core.domain.model.MediaList
 import com.example.core.domain.repositories.MoviesRepository
 import com.example.core.domain.repositories.SeriesRepository
 import kotlinx.coroutines.flow.Flow
