@@ -31,7 +31,7 @@ class MediaDetailMapper @Inject constructor() : NetflixMapper<MediaDetailRespons
         results: List<MediaDetailResponse.MediaVideoResponse>?
     ): String {
         return results
-            ?.firstOrNull { it.official == true }
+            ?.firstOrNull { it.official == true && it.type == TRAILER_TYPE }
             ?.key
             ?: ""
     }
@@ -41,5 +41,6 @@ class MediaDetailMapper @Inject constructor() : NetflixMapper<MediaDetailRespons
 
     private companion object {
         const val TAG = "MovieDetailMapper"
+        const val TRAILER_TYPE = "Trailer"
     }
 }

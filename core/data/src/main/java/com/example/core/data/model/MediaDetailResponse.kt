@@ -33,7 +33,9 @@ data class MediaDetailResponse(
         @SerialName("key")
         val key: String?,
         @SerialName("official")
-        val official: Boolean?
+        val official: Boolean?,
+        @SerialName("type")
+        val type: String?
     )
 }
 

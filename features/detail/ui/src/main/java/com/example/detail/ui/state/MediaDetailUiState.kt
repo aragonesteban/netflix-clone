@@ -7,7 +7,7 @@ sealed interface MediaDetailUiState {
     data object Loading : MediaDetailUiState
 
     data class ShowMediaDetailContent(
-        val movieDetail: Pair<MediaDetail, MediaList>
+        val mediaDetailContent: Pair<MediaDetail, MediaList>
     ) : MediaDetailUiState
 
     data class Error(val message: String) : MediaDetailUiState

@@ -26,13 +26,18 @@ class DetailMediaViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<MediaDetailUiState>(MediaDetailUiState.Loading)
     val uiState: StateFlow<MediaDetailUiState> = _uiState.asStateFlow()
 
+    private var mediaDetailContent: Pair<MediaDetail, MediaList>? = null
+
     fun getMediaDetailById(mediaId: Int, mediaType: MediaType) {
         viewModelScope.launch {
-            fetchMediaDetail(mediaId = mediaId, mediaType)
+            mediaDetailContent?.let {
+                _uiState.value = MediaDetailUiState.ShowMediaDetailContent(it)
+            } ?: fetchMediaDetail(mediaId = mediaId, mediaType)
                 .onStart { _uiState.value = MediaDetailUiState.Loading }
                 .catch { _uiState.value = MediaDetailUiState.Error(it.message.toString()) }
-                .collect { movieDetail ->
-                    _uiState.value = MediaDetailUiState.ShowMediaDetailContent(movieDetail)
+                .collect { mediaDetail ->
+                    mediaDetailContent = mediaDetail
+                    _uiState.value = MediaDetailUiState.ShowMediaDetailContent(mediaDetail)
                 }
         }
     }

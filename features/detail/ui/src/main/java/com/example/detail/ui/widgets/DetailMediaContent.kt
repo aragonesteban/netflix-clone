@@ -1,6 +1,8 @@
 package com.example.detail.ui.widgets
 
 import android.os.Build
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,10 +28,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,12 +47,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.Media
-import com.example.core.domain.model.MediaList
 import com.example.core.domain.model.MediaDetail
+import com.example.core.domain.model.MediaList
 import com.example.detail.ui.model.DetailMediaAction
 import com.example.ui.molecules.NetflixButton
 import com.example.ui.molecules.NetflixRemoteImage
 import com.example.ui.theme.NetflixTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,7 +71,13 @@ fun DetailMediaContent(
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
-    var showTrailer by remember { mutableStateOf(playVideo) }
+    var showTrailer by rememberSaveable { mutableStateOf(playVideo) }
+    var infoVisibility by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        delay(200)
+        infoVisibility = true
+    }
 
     Box(
         modifier = modifier.fillMaxSize()
@@ -75,24 +86,26 @@ fun DetailMediaContent(
             DetailMediaBackdrop(mediaDetail.posterPath)
         }
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(vertical = 32.dp)
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            DetailMediaHeader(mediaDetail)
-            DetailMediaInfo(mediaDetail) {
-                showTrailer = true
+        AnimatedVisibility(visible = infoVisibility, enter = fadeIn()) {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(vertical = 32.dp)
+                    .verticalScroll(scrollState),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                DetailMediaHeader(mediaDetail)
+                DetailMediaInfo(mediaDetail) {
+                    showTrailer = true
+                }
+                DetailMediaActions(
+                    listOf(DetailMediaAction.Like, DetailMediaAction.Rate, DetailMediaAction.Share)
+                )
+                DetailMediaRecommendation(
+                    similarMedia = similarMovies,
+                    onMediaClick = { mediaId -> onMediaClick(mediaId) }
+                )
             }
-            DetailMediaActions(
-                listOf(DetailMediaAction.Like, DetailMediaAction.Rate, DetailMediaAction.Share)
-            )
-            DetailMediaRecommendation(
-                similarMedia = similarMovies,
-                onMediaClick = { mediaId -> onMediaClick(mediaId) }
-            )
         }
 
         IconButton(

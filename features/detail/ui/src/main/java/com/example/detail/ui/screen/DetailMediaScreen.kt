@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,8 +44,8 @@ fun DetailMediaScreen(
             is MediaDetailUiState.ShowMediaDetailContent ->
                 with(uiState) {
                     DetailMediaContent(
-                        mediaDetail = movieDetail.first,
-                        similarMovies = movieDetail.second,
+                        mediaDetail = mediaDetailContent.first,
+                        similarMovies = mediaDetailContent.second,
                         playVideo = playVideo,
                         onBackPress = onBackPress,
                         onMediaClick = { mediaId -> onMediaClick(mediaId, mediaType) }
