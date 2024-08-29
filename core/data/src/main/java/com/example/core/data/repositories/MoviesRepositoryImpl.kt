@@ -1,41 +1,41 @@
 package com.example.core.data.repositories
 
-import android.content.Context
-import com.example.core.data.config.utils.NetflixMapper
-import com.example.core.data.model.MediaDetailResponse
-import com.example.core.data.model.MediaResponse
-import com.example.core.data.service.MoviesApiService
+import com.example.core.data.local.MediaLocalData
+import com.example.core.data.remote.MoviesRemoteData
 import com.example.core.domain.model.MediaDetail
 import com.example.core.domain.model.MediaList
+import com.example.core.domain.model.MediaType
 import com.example.core.domain.repositories.MoviesRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
-    private val moviesApi: MoviesApiService,
-    private val mediaMapper: NetflixMapper<MediaResponse, MediaList>,
-    private val mediaDetailMapper: NetflixMapper<MediaDetailResponse, MediaDetail>,
-    context: Context
-) : MoviesRepository, BaseRepository(context) {
+    private val moviesRemoteData: MoviesRemoteData,
+    private val mediaLocalData: MediaLocalData
+) : MoviesRepository, BaseRepository() {
 
     override suspend fun getMoviesByCategory(
         category: String
     ): Flow<MediaList> = fetchData(
-        apiCall = { moviesApi.getMoviesByCategory(category) },
-        mapper = mediaMapper
+        localData = {
+            mediaLocalData.getMediaList(category, MediaType.MOVIES)
+        },
+        remoteData = { moviesRemoteData.getMoviesByCategory(category) },
+        saveRemoteData = { mediaList ->
+            mediaLocalData.insertMediaListItems(mediaList.items, category, MediaType.MOVIES)
+        }
     )
 
     override suspend fun getMovieDetailById(
         movieId: Int
     ): Flow<MediaDetail> = fetchData(
-        apiCall = { moviesApi.getMovieDetailById(movieId) },
-        mapper = mediaDetailMapper
+        localData = { mediaLocalData.getMediaDetailById(movieId) },
+        remoteData = { moviesRemoteData.getMovieDetailById(movieId) },
+        saveRemoteData = { mediaDetail -> mediaLocalData.insertMediaDetail(mediaDetail) }
     )
 
-    override suspend fun getSimilarMoviesById(
-        movieId: Int
-    ): Flow<MediaList> = fetchData(
-        apiCall = { moviesApi.getSimilarMoviesById(movieId) },
-        mapper = mediaMapper
-    )
+    override suspend fun getSimilarMoviesById(movieId: Int): Flow<MediaList> =
+        moviesRemoteData.getSimilarMoviesById(movieId)
+            .catch { emit(MediaList(emptyList())) }
 }

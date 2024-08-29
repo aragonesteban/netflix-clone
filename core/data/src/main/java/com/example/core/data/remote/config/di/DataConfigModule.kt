@@ -1,7 +1,7 @@
-package com.example.core.data.config.di
+package com.example.core.data.remote.config.di
 
 import com.example.core.data.BuildConfig
-import com.example.core.data.config.utils.ApiKeyInterceptor
+import com.example.core.data.remote.config.utils.ApiKeyInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

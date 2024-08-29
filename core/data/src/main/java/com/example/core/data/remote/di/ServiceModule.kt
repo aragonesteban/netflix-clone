@@ -1,7 +1,7 @@
-package com.example.core.data.di
+package com.example.core.data.remote.di
 
-import com.example.core.data.service.MoviesApiService
-import com.example.core.data.service.SeriesApiService
+import com.example.core.data.remote.service.MoviesApiService
+import com.example.core.data.remote.service.SeriesApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

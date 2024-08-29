@@ -1,4 +1,4 @@
-package com.example.core.data.di
+package com.example.core.data.repositories.di
 
 import com.example.core.data.repositories.MoviesRepositoryImpl
 import com.example.core.data.repositories.SeriesRepositoryImpl

@@ -54,7 +54,7 @@ fun HomeContent(
                 item {
                     NetflixMediaCarousel(
                         itemsHome = content.secondCategoryMediaList.items,
-                        title = "Now Playing Movies",
+                        title = "Upcoming Movies",
                         modifier = Modifier.padding(top = 8.dp)
                     ) { onMediaClick(it.id, false) }
                 }

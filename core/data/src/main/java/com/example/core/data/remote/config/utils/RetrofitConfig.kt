@@ -1,4 +1,4 @@
-package com.example.core.data.config.utils
+package com.example.core.data.remote.config.utils
 
 import retrofit2.Response
 import java.net.UnknownHostException

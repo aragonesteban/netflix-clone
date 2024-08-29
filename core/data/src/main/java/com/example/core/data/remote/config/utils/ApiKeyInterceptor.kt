@@ -1,4 +1,4 @@
-package com.example.core.data.config.utils
+package com.example.core.data.remote.config.utils
 
 import okhttp3.Interceptor
 import okhttp3.Response

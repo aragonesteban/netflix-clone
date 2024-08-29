@@ -1,4 +1,4 @@
-package com.example.core.data.utils
+package com.example.core.data.remote.config.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

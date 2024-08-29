@@ -1,4 +1,4 @@
-package com.example.core.data.config.utils
+package com.example.core.data.utils
 
 interface NetflixMapper<Input, Output> {
     fun map(input: Input): Output

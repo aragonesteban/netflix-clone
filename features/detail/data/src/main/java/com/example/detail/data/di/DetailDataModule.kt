@@ -1,7 +1,7 @@
 package com.example.detail.data.di
 
-import com.example.core.data.config.utils.NetflixMapper
-import com.example.core.data.model.MediaDetailResponse
+import com.example.core.data.utils.NetflixMapper
+import com.example.core.data.remote.model.MediaDetailResponse
 import com.example.core.domain.model.MediaDetail
 import com.example.detail.data.mappers.MediaDetailMapper
 import dagger.Binds

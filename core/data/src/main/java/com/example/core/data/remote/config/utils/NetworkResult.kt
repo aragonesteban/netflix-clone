@@ -1,4 +1,4 @@
-package com.example.core.data.config.utils
+package com.example.core.data.remote.config.utils
 
 sealed interface NetworkResult<out T> {
     data class Success<out T>(val data: T) : NetworkResult<T>
