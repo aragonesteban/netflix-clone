@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -79,9 +80,7 @@ fun DetailMediaContent(
         infoVisibility = true
     }
 
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
+    Box(modifier = modifier.fillMaxSize()) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S) {
             DetailMediaBackdrop(mediaDetail.posterPath)
         }
@@ -90,10 +89,10 @@ fun DetailMediaContent(
             Column(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(vertical = 32.dp)
                     .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Spacer(modifier = Modifier.size(32.dp))
                 DetailMediaHeader(mediaDetail)
                 DetailMediaInfo(mediaDetail) {
                     showTrailer = true
@@ -101,10 +100,12 @@ fun DetailMediaContent(
                 DetailMediaActions(
                     listOf(DetailMediaAction.Like, DetailMediaAction.Rate, DetailMediaAction.Share)
                 )
-                DetailMediaRecommendation(
-                    similarMedia = similarMovies,
-                    onMediaClick = { mediaId -> onMediaClick(mediaId) }
-                )
+                if (similarMovies.items.isNotEmpty()) {
+                    DetailMediaRecommendation(
+                        similarMedia = similarMovies,
+                        onMediaClick = { mediaId -> onMediaClick(mediaId) }
+                    )
+                }
             }
         }
 
@@ -133,109 +134,6 @@ fun DetailMediaContent(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun DetailMediaHeader(
-    mediaDetail: MediaDetail
-) {
-    NetflixRemoteImage(
-        url = mediaDetail.posterPath,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .padding(bottom = 16.dp)
-            .width(130.dp)
-            .height(190.dp)
-            .clip(RoundedCornerShape(6.dp))
-    )
-
-    Text(
-        text = mediaDetail.title,
-        style = MaterialTheme.typography.headlineSmall,
-        fontWeight = FontWeight.SemiBold,
-        color = MaterialTheme.colorScheme.onPrimary,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.padding(horizontal = 16.dp)
-    )
-}
-
-@Composable
-fun DetailMediaInfo(
-    mediaDetail: MediaDetail,
-    modifier: Modifier = Modifier,
-    onClickPlay: () -> Unit
-) {
-    Column(
-        modifier = modifier
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row {
-            Text(
-                text = mediaDetail.year,
-                color = NetflixTheme.colors.onPrimary.copy(alpha = .4F),
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-
-        Spacer(modifier = Modifier.size(12.dp))
-
-        NetflixButton(
-            text = "Play",
-            onClick = { onClickPlay() },
-            icon = Icons.Default.PlayArrow,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.size(4.dp))
-
-        NetflixButton(
-            text = "Download",
-            onClick = { },
-            icon = Icons.Default.Download,
-            contentColor = NetflixTheme.colors.onPrimary,
-            containerColor = NetflixTheme.colors.onPrimary.copy(alpha = .1F),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.size(12.dp))
-
-        Text(
-            text = mediaDetail.overview,
-            color = NetflixTheme.colors.onPrimary,
-            style = MaterialTheme.typography.bodySmall
-        )
-    }
-}
-
-@Composable
-fun DetailMediaBackdrop(
-    poster: String,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(470.dp)
-    ) {
-        NetflixRemoteImage(
-            url = poster,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .blur(radiusX = 50.dp, radiusY = 50.dp)
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .align(Alignment.BottomCenter)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, Color.Black)
-                    )
-                )
-        )
     }
 }
 
