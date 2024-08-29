@@ -21,6 +21,7 @@ import com.example.core.domain.model.MediaType
 import com.example.home.ui.state.HomeUiState
 import com.example.home.ui.viewmodel.HomeViewModel
 import com.example.home.ui.widgets.HomeContent
+import com.example.ui.screens.ErrorRetryScreen
 import com.example.ui.theme.NetflixTheme
 
 @Composable
@@ -68,7 +69,7 @@ fun HomeScreen(
             }
 
             is HomeUiState.Error -> {
-                Text(text = "Error")
+                ErrorRetryScreen { onGetMediaContent(currentMediaType) }
             }
         }
     }

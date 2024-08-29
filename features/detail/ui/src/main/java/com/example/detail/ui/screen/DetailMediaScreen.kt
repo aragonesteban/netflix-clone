@@ -15,6 +15,7 @@ import com.example.core.domain.model.MediaType
 import com.example.detail.ui.state.MediaDetailUiState
 import com.example.detail.ui.viewmodel.DetailMediaViewModel
 import com.example.detail.ui.widgets.DetailMediaContent
+import com.example.ui.screens.ErrorRetryScreen
 import com.example.ui.theme.NetflixTheme
 
 @Composable
@@ -53,7 +54,7 @@ fun DetailMediaScreen(
                 }
 
             is MediaDetailUiState.Error -> {
-                Text(text = "Error ${uiState.message}", color = NetflixTheme.colors.onPrimary)
+                ErrorRetryScreen { viewModel.getMediaDetailById(mediaId, mediaType) }
             }
         }
     }
