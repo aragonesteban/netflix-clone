@@ -3,7 +3,7 @@ package com.example.core.data.config.utils
 import retrofit2.Response
 import java.net.UnknownHostException
 
-inline fun <Api : Any, Data : Any> Response<Api>.handleRequest(mapper: (Api) -> Data): NetworkResult<Data> {
+inline fun <Api, Data> Response<Api>.handleRequest(mapper: (Api) -> Data): NetworkResult<Data> {
     return try {
         return if (isSuccessful) {
             body()?.let {
@@ -19,7 +19,7 @@ inline fun <Api : Any, Data : Any> Response<Api>.handleRequest(mapper: (Api) -> 
     }
 }
 
-inline fun <T : Any> NetworkResult<T>.handleNetworkResult(onSuccess: (T) -> Unit) {
+inline fun <T> NetworkResult<T>.handleNetworkResult(onSuccess: (T) -> Unit) {
     when (this) {
         is NetworkResult.Success -> onSuccess(data)
         is NetworkResult.Error -> throw RuntimeException("There was an error $message $code")
