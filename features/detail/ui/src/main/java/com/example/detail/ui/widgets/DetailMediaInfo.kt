@@ -14,11 +14,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.MediaDetail
 import com.example.ui.molecules.NetflixButton
 import com.example.ui.theme.NetflixTheme
+import com.example.features.detail.ui.R
+import com.example.core.ui.R as CoreUi
 
 @Composable
 fun DetailMediaInfo(
@@ -42,7 +45,7 @@ fun DetailMediaInfo(
         Spacer(modifier = Modifier.size(12.dp))
 
         NetflixButton(
-            text = "Play",
+            text = stringResource(id = CoreUi.string.netflix_label_play),
             onClick = { onClickPlay() },
             icon = Icons.Default.PlayArrow,
             modifier = Modifier.fillMaxWidth()
@@ -51,7 +54,7 @@ fun DetailMediaInfo(
         Spacer(modifier = Modifier.size(4.dp))
 
         NetflixButton(
-            text = "Download",
+            text = stringResource(id = R.string.netflix_label_download),
             onClick = { },
             icon = Icons.Default.Download,
             contentColor = NetflixTheme.colors.onPrimary,

@@ -2,6 +2,8 @@ package com.example.home.domain.usecases
 
 import com.example.core.domain.model.MediaList
 import com.example.core.domain.repositories.SeriesRepository
+import com.example.home.domain.utils.POPULAR
+import com.example.home.domain.utils.TOP_RATED
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -14,9 +16,4 @@ class SeriesUseCase @Inject constructor(
 
     suspend fun getTopRatedSeries(): Flow<MediaList> =
         seriesRepository.getSeriesByCategory(TOP_RATED)
-
-    private companion object {
-        const val POPULAR = "popular"
-        const val TOP_RATED = "top_rated"
-    }
 }

@@ -16,7 +16,7 @@ class MediaDetailMapper @Inject constructor() : NetflixMapper<MediaDetailRespons
                     id = requireNotNull(id) { "id is required" },
                     title = title ?: name ?: "",
                     overview = overview ?: "",
-                    posterPath = posterPath.mapPosterImage("original"),
+                    posterPath = posterPath.mapPosterImage(),
                     year = releaseDate?.let(::mapYear) ?: firstAirDate?.let(::mapYear) ?: "",
                     videoYoutubeKey = mapVideoYoutubeKey(videos?.results)
                 )

@@ -39,18 +39,18 @@ fun HomeContentActions(
                 contentPadding = PaddingValues(horizontal = 20.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (currentMediaType == content)
-                        MaterialTheme.colorScheme.onPrimary.copy(alpha = .4F)
+                        NetflixTheme.colors.onPrimary.copy(alpha = .4F)
                     else
                         Color.Transparent
                 ),
                 border = BorderStroke(
                     width = 1.dp,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = NetflixTheme.colors.onPrimary,
                 )
             ) {
                 Text(
                     text = content.value,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = NetflixTheme.colors.onPrimary,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 12.sp,
                 )

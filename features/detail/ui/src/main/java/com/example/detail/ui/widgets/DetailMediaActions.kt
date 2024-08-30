@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.detail.ui.model.DetailMediaAction
@@ -46,11 +47,11 @@ fun DetailMediaActionsItem(
     ) {
         Icon(
             imageVector = action.icon,
-            contentDescription = action.text,
+            contentDescription = stringResource(id = action.text),
             tint = NetflixTheme.colors.onPrimary
         )
         Text(
-            text = action.text,
+            text = stringResource(id = action.text),
             color = NetflixTheme.colors.onPrimary,
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(top = 8.dp)

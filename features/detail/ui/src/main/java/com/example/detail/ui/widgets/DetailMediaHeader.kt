@@ -38,7 +38,7 @@ fun DetailMediaHeader(
         text = mediaDetail.title,
         style = MaterialTheme.typography.headlineSmall,
         fontWeight = FontWeight.SemiBold,
-        color = MaterialTheme.colorScheme.onPrimary,
+        color = NetflixTheme.colors.onPrimary,
         textAlign = TextAlign.Center,
         modifier = Modifier.padding(horizontal = 16.dp)
     )

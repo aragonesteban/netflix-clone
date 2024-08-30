@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="netflix_subtitle_popular">Popular</string>
+    <string name="netflix_subtitle_upcoming">Upcoming</string>
+    <string name="netflix_subtitle_top_rated">Top Rated</string>
+    <string name="netflix_label_info">Info</string>
+</resources>

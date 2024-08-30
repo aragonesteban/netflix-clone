@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.Media
@@ -19,6 +20,7 @@ import com.example.core.domain.model.MediaType
 import com.example.home.ui.model.HomeMediaContentUi
 import com.example.ui.molecules.NetflixMediaCarousel
 import com.example.ui.theme.NetflixTheme
+import com.example.home.ui.R
 
 @Composable
 fun HomeContent(
@@ -46,7 +48,7 @@ fun HomeContent(
                 item {
                     NetflixMediaCarousel(
                         itemsHome = content.firstCategoryMediaList.items.drop(1),
-                        title = "Popular movies",
+                        title = stringResource(id = R.string.netflix_subtitle_popular),
                         modifier = Modifier.padding(top = 22.dp)
                     ) { onMediaClick(it.id, false) }
                 }
@@ -54,7 +56,12 @@ fun HomeContent(
                 item {
                     NetflixMediaCarousel(
                         itemsHome = content.secondCategoryMediaList.items,
-                        title = "Upcoming Movies",
+                        title = stringResource(
+                            id = when (currentMediaType) {
+                                MediaType.MOVIES -> R.string.netflix_subtitle_upcoming
+                                MediaType.SERIES -> R.string.netflix_subtitle_top_rated
+                            }
+                        ),
                         modifier = Modifier.padding(top = 8.dp)
                     ) { onMediaClick(it.id, false) }
                 }

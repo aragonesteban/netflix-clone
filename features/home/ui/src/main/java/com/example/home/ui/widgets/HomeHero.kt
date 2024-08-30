@@ -25,12 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.domain.model.Media
+import com.example.core.ui.R as CoreUi
+import com.example.home.ui.R
 import com.example.ui.molecules.NetflixButton
 import com.example.ui.molecules.NetflixRemoteImage
 import com.example.ui.theme.NetflixTheme
@@ -107,7 +110,7 @@ fun HomeHeroActions(
         }
 
         NetflixButton(
-            text = "Play",
+            text = stringResource(id = CoreUi.string.netflix_label_play),
             onClick = { onMediaClick(true) },
             icon = Icons.Default.PlayArrow,
             containerColor = NetflixTheme.colors.onPrimary,
@@ -124,7 +127,11 @@ fun HomeHeroActions(
                 modifier = Modifier.size(16.dp),
                 tint = NetflixTheme.colors.onPrimary
             )
-            Text("Info", color = NetflixTheme.colors.onPrimary, fontSize = 12.sp)
+            Text(
+                stringResource(id = R.string.netflix_label_info),
+                color = NetflixTheme.colors.onPrimary,
+                fontSize = 12.sp
+            )
         }
     }
 }

@@ -10,7 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-private const val NAME_DATABASE = "MediaDatabase"
+private const val NAME_DATABASE = "NetflixCloneDatabase"
 
 @Module
 @InstallIn(SingletonComponent::class)

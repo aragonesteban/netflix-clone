@@ -21,7 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Netflix Clone"
 include(":app")
-include(":features")
 
 // Core
 include(":core:data")

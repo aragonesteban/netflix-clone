@@ -2,6 +2,8 @@ package com.example.home.domain.usecases
 
 import com.example.core.domain.model.MediaList
 import com.example.core.domain.repositories.MoviesRepository
+import com.example.home.domain.utils.POPULAR
+import com.example.home.domain.utils.UPCOMING
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -14,9 +16,4 @@ class MoviesUseCase @Inject constructor(
 
     suspend fun getUpcomingMovies(): Flow<MediaList> =
         moviesRepository.getMoviesByCategory(UPCOMING)
-
-    private companion object {
-        const val POPULAR = "popular"
-        const val UPCOMING = "upcoming"
-    }
 }

@@ -1,8 +1,8 @@
 package com.example.data.local
 
+import com.example.core.data.local.database.MediaDao
 import com.example.core.data.local.media.MediaLocalData
 import com.example.core.data.local.media.MediaLocalDataImpl
-import com.example.core.data.local.database.MediaDao
 import com.example.core.data.local.model.MediaDetailEntity
 import com.example.core.data.local.model.MediaEntity
 import com.example.core.domain.model.Media

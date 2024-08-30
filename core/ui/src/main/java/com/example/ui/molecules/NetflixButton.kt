@@ -21,10 +21,10 @@ import com.example.ui.theme.NetflixTheme
 fun NetflixButton(
     text: String,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     containerColor: Color = NetflixTheme.colors.onPrimary,
     contentColor: Color = NetflixTheme.colors.onSecondary,
-    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
