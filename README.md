@@ -36,28 +36,18 @@ Netflix App Clone using modern Android development with Hilt, Coroutines, Jetpac
 
 The project follows a modular and layered architecture, specifically the MVVM (Model-View-ViewModel) pattern and Clean Architecture principles. Here is an explanation of the package structure:  
 
-/core
-    This module contains the core modules that are shared across the application.  
- - /ui: Contains UI-related components that are reusable across different features.
- - /data: Manages data sources such as network and cache. It includes:
-   - local: Handles local data storage, such as Room database entities and DAOs.
-   - remote: Manages remote data sources, such as API services. 
- - /domain: Contains business models, logic and use cases. It acts as an intermediary between the data layer and the presentation layer.
+- **/core** This module contains the core modules that are shared across the application.  
+    - **/ui:** Contains UI-related components that are reusable across different features.
+    - **/data:** Manages data sources such as network and cache. It includes:
+        - **/local:** Handles local data storage, such as Room database entities and DAOs.
+        - **/remote:** Manages remote data sources, such as API services. 
+    - **/domain:** Contains business logic, models and use cases. It acts as an intermediary between the data layer and the presentation layer.
    
- - /features
-   This directory contains the feature-specific modules, each representing a distinct feature of the application.  
-   - /feature_name: Each feature module includes:
-     - data: Consume data from the core data module and use adapter pattern to adapt data to the ui needs.
-     - domain: Contains the business logic and use cases specific to the feature.
-     - ui: Contains the UI components specific to the feature.
+- **/features** This directory contains the feature-specific modules, each representing a distinct feature of the application.  
+   - **/feature_name:** Each feature module includes:
+     - **/data:** Consume data from the core data module and use adapter pattern to adapt data to the ui needs.
+     - **/domain:** Contains the business logic and use cases specific to the feature.
+     - **/ui:** Contains the UI components specific to the feature.
      
 <br />
-
-## How I run the app?
-- Clone the repository
-- Open it in Android Studio
-- Wait until dependencies are installed
-- Run app in your emulator or physical device
-
-If you don't have Android Studio and you don't want to clone the repository, you can downlad an apk [here](https://www.mediafire.com/file/si1kpvvwgbsn8eg/eMovies.apk/file) 
 
