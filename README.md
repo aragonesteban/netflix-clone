@@ -51,7 +51,7 @@ The project follows a modular and layered architecture, specifically the MVVM (M
      
 <br />
 
-## How I run the app?
+## How do I run the app?
 - Clone the repository
 - Open it in Android Studio
 - Wait until dependencies are installed
