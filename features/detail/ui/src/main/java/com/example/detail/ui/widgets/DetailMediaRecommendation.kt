@@ -20,9 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.Media
 import com.example.core.domain.model.MediaList
+import com.example.features.detail.ui.R
 import com.example.ui.molecules.NetflixMediaCarousel
 import com.example.ui.theme.NetflixTheme
-import com.example.features.detail.ui.R
 
 @Composable
 fun DetailMediaRecommendation(

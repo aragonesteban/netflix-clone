@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.Media
 import com.example.core.domain.model.MediaList
 import com.example.core.domain.model.MediaType
+import com.example.home.ui.R
 import com.example.home.ui.model.HomeMediaContentUi
 import com.example.ui.molecules.NetflixMediaCarousel
 import com.example.ui.theme.NetflixTheme
-import com.example.home.ui.R
 
 @Composable
 fun HomeContent(

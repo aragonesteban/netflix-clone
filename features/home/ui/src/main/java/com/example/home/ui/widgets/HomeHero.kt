@@ -32,11 +32,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.domain.model.Media
-import com.example.core.ui.R as CoreUi
 import com.example.home.ui.R
 import com.example.ui.molecules.NetflixButton
 import com.example.ui.molecules.NetflixRemoteImage
 import com.example.ui.theme.NetflixTheme
+import com.example.core.ui.R as CoreUi
 
 @Composable
 fun HomeHero(

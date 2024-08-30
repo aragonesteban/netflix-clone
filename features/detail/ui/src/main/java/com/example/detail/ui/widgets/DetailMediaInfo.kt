@@ -18,9 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.MediaDetail
+import com.example.features.detail.ui.R
 import com.example.ui.molecules.NetflixButton
 import com.example.ui.theme.NetflixTheme
-import com.example.features.detail.ui.R
 import com.example.core.ui.R as CoreUi
 
 @Composable
