@@ -7,7 +7,8 @@ import com.example.core.data.local.model.MediaEntity
 
 @Database(
     entities = [MediaEntity::class, MediaDetailEntity::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class MediaDatabase : RoomDatabase() {
     abstract fun moviesDao(): MediaDao
