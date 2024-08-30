@@ -1,8 +1,8 @@
 package com.example.home.data.mappers
 
 import android.util.Log
-import com.example.core.data.utils.NetflixMapper
 import com.example.core.data.remote.model.MediaResponse
+import com.example.core.data.utils.NetflixMapper
 import com.example.core.data.utils.mapPosterImage
 import com.example.core.domain.model.Media
 import com.example.core.domain.model.MediaList

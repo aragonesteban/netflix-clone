@@ -1,7 +1,7 @@
 package com.example.core.data.repositories
 
-import com.example.core.data.local.MediaLocalData
-import com.example.core.data.remote.SeriesRemoteData
+import com.example.core.data.local.media.MediaLocalDataImpl
+import com.example.core.data.remote.series.SeriesRemoteData
 import com.example.core.domain.model.MediaDetail
 import com.example.core.domain.model.MediaList
 import com.example.core.domain.model.MediaType
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class SeriesRepositoryImpl @Inject constructor(
     private val seriesRemoteData: SeriesRemoteData,
-    private val mediaLocalData: MediaLocalData
+    private val mediaLocalData: MediaLocalDataImpl
 ) : SeriesRepository, BaseRepository() {
 
     override suspend fun getSeriesByCategory(

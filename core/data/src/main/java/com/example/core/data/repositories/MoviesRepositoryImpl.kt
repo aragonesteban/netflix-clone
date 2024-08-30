@@ -1,7 +1,7 @@
 package com.example.core.data.repositories
 
-import com.example.core.data.local.MediaLocalData
-import com.example.core.data.remote.MoviesRemoteData
+import com.example.core.data.local.media.MediaLocalDataImpl
+import com.example.core.data.remote.movies.MoviesRemoteData
 import com.example.core.domain.model.MediaDetail
 import com.example.core.domain.model.MediaList
 import com.example.core.domain.model.MediaType
@@ -12,15 +12,13 @@ import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
     private val moviesRemoteData: MoviesRemoteData,
-    private val mediaLocalData: MediaLocalData
+    private val mediaLocalData: MediaLocalDataImpl
 ) : MoviesRepository, BaseRepository() {
 
     override suspend fun getMoviesByCategory(
         category: String
     ): Flow<MediaList> = fetchData(
-        localData = {
-            mediaLocalData.getMediaList(category, MediaType.MOVIES)
-        },
+        localData = { mediaLocalData.getMediaList(category, MediaType.MOVIES) },
         remoteData = { moviesRemoteData.getMoviesByCategory(category) },
         saveRemoteData = { mediaList ->
             mediaLocalData.insertMediaListItems(mediaList.items, category, MediaType.MOVIES)

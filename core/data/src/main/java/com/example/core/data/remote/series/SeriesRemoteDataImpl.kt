@@ -1,40 +1,41 @@
-package com.example.core.data.remote
+package com.example.core.data.remote.series
 
 import android.content.Context
+import com.example.core.data.remote.BaseRemoteData
 import com.example.core.data.remote.model.MediaDetailResponse
 import com.example.core.data.remote.model.MediaResponse
-import com.example.core.data.remote.service.MoviesApiService
+import com.example.core.data.remote.service.SeriesApiService
 import com.example.core.data.utils.NetflixMapper
 import com.example.core.domain.model.MediaDetail
 import com.example.core.domain.model.MediaList
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class MoviesRemoteData @Inject constructor(
-    private val moviesApi: MoviesApiService,
+class SeriesRemoteDataImpl @Inject constructor(
+    private val seriesApi: SeriesApiService,
     private val mediaMapper: NetflixMapper<MediaResponse, MediaList>,
     private val mediaDetailMapper: NetflixMapper<MediaDetailResponse, MediaDetail>,
     context: Context
-): BaseRemoteData(context) {
+) : SeriesRemoteData, BaseRemoteData(context) {
 
-    suspend fun getMoviesByCategory(
+    override suspend fun getSeriesByCategory(
         category: String
     ): Flow<MediaList> = fetchRemoteData(
-        apiCall = { moviesApi.getMoviesByCategory(category) },
+        apiCall = { seriesApi.getSeriesByCategory(category) },
         mapper = mediaMapper
     )
 
-    suspend fun getMovieDetailById(
-        movieId: Int
+    override suspend fun getSeriesDetailById(
+        seriesId: Int
     ): Flow<MediaDetail> = fetchRemoteData(
-        apiCall = { moviesApi.getMovieDetailById(movieId) },
+        apiCall = { seriesApi.getSeriesDetailById(seriesId) },
         mapper = mediaDetailMapper
     )
 
-    suspend fun getSimilarMoviesById(
-        movieId: Int
+    override suspend fun getSimilarSeriesById(
+        seriesId: Int
     ): Flow<MediaList> = fetchRemoteData(
-        apiCall = { moviesApi.getSimilarMoviesById(movieId) },
+        apiCall = { seriesApi.getSimilarSeriesById(seriesId) },
         mapper = mediaMapper
     )
 }

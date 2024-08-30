@@ -1,4 +1,4 @@
-package com.example.core.data.local
+package com.example.core.data.local.media
 
 import com.example.core.data.local.database.MediaDao
 import com.example.core.data.local.model.MediaDetailEntity
@@ -9,11 +9,11 @@ import com.example.core.domain.model.MediaList
 import com.example.core.domain.model.MediaType
 import javax.inject.Inject
 
-class MediaLocalData @Inject constructor(
+class MediaLocalDataImpl @Inject constructor(
     private val mediaDao: MediaDao
-) {
+): MediaLocalData {
 
-    fun insertMediaListItems(mediaList: List<Media>, category: String, mediaType: MediaType) {
+    override fun insertMediaListItems(mediaList: List<Media>, category: String, mediaType: MediaType) {
         val moviesItemsEntityList = mediaList.map { movie ->
             MediaEntity(
                 mediaId = movie.id,
@@ -26,7 +26,7 @@ class MediaLocalData @Inject constructor(
         mediaDao.insertMediaListItems(moviesItemsEntityList)
     }
 
-    fun getMediaList(category: String, mediaType: MediaType): MediaList? {
+    override fun getMediaList(category: String, mediaType: MediaType): MediaList? {
         val localMediaList = mediaDao.getMediaList()
             .filter { it.category == category && it.mediaType == mediaType.value }
 
@@ -45,7 +45,7 @@ class MediaLocalData @Inject constructor(
         }
     }
 
-    fun insertMediaDetail(mediaDetail: MediaDetail) {
+    override fun insertMediaDetail(mediaDetail: MediaDetail) {
         val mediaDetailEntity = MediaDetailEntity(
             id = mediaDetail.id,
             title = mediaDetail.title,
@@ -57,7 +57,7 @@ class MediaLocalData @Inject constructor(
         mediaDao.insertMediaDetail(mediaDetailEntity)
     }
 
-    fun getMediaDetailById(movieId: Int): MediaDetail? {
+    override fun getMediaDetailById(movieId: Int): MediaDetail? {
         val movieDetailEntity = mediaDao.getMediaDetailById(movieId)
         return movieDetailEntity?.run {
             MediaDetail(

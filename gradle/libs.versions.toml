@@ -27,6 +27,9 @@ navigation = "2.7.7"
 coil = "2.7.0"
 material-icons = "1.6.8"
 android-youtube-player = "11.1.0"
+mockk = "1.13.8"
+kotlinTest = "1.9.20"
+androidxTest = "1.6.1"
 
 
 [libraries]
@@ -66,6 +69,13 @@ androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx",
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons" }
 android-youtube-player-core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "android-youtube-player" }
+mockk-core = { module = "io.mockk:mockk", version.ref = "mockk" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinTest" }
+androidx-test-core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidxTest" }
+robolectric = "org.robolectric:robolectric:4.13"
+androidx-test-junit = "androidx.test.ext:junit-ktx:1.2.1"
+androidx-core-testing = "androidx.arch.core:core-testing:2.2.0"
+kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,8 +1,8 @@
 package com.example.detail.data.mappers
 
 import android.util.Log
-import com.example.core.data.utils.NetflixMapper
 import com.example.core.data.remote.model.MediaDetailResponse
+import com.example.core.data.utils.NetflixMapper
 import com.example.core.data.utils.mapPosterImage
 import com.example.core.domain.model.MediaDetail
 import javax.inject.Inject
